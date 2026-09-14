@@ -1,0 +1,19 @@
+services:
+
+  ml-service:
+    build:
+      context: ./ML_Service
+    container_name: taxi-ml-service
+    ports:
+      - "8001:8001"
+
+  trip-api:
+    build:
+      context: ./Trip_API
+    container_name: taxi-trip-api
+    ports:
+      - "8000:8000"
+    environment:
+      ML_SERVICE_URL: http://ml-service:8001
+    depends_on:
+      - ml-service
